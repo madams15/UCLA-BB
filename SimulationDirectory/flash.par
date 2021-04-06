@@ -1,0 +1,253 @@
+#####################################################################
+#	flash.par for UCLA Biermann Battery Simulations		    #
+#	M. B. P. Adams, S. Fiester				    #
+#	March 2021	   					    #
+#								    #
+#	Set-up command:						    #
+# 	       ./setup magnetoHD/UCLA-BB-Marissa -2d -auto \	    #
+#              	       -nxb=16 -nyb=16 +hdf5typeio +usm3t  \	    #
+#        	       species=cham,targ +mtmmmt +laser    \	    #
+#        	       ed_maxPulses=1 ed_maxBeams=1	   \	    #
+#		       ed_maxPulseSections=4		   \	    #			
+#        	       +mgd mgd_meshgroups=6               \	    #
+#        	       -parfile=peenplume3.par	      	   \	    #
+#        	       -site=mbpadams -objdir=UCLA_BB_Marissa-Test  #
+#		       		      	    			    #
+#####################################################################
+
+#####################################################################
+#		FILE I/O & PLOTTING RUNTIME PARAMETERS		    #
+#####################################################################
+restart				= .FALSE.
+run_comment 			= "UCLA Biermann Battery Simulations"
+log_file    			= "ucla-bb.log"
+basenm      			= "ucla-bb_"
+
+checkpointFileNumber            = 0
+plotFileNumber                  = 0
+checkpointFileIntervalTime      = 10.0E-9	# Checkpoint file every 10ns
+plotFileIntervalTime            = 1.00E-9	# Plot file every 0.1ns
+checkpointFileIntervalStep      = 0
+plotFileIntervalStep            = 100
+
+plot_var_1                      = "dens"
+plot_var_2                      = "depo"
+plot_var_3                      = "tele"
+plot_var_4                      = "tion"
+plot_var_5                      = "trad"
+plot_var_6                      = "ye  "
+plot_var_7                      = "sumy"
+plot_var_8                      = "cham"
+plot_var_9                      = "targ"
+plot_var_10                     = "magx"
+plot_var_11                     = "magy"
+plot_var_12                     = "magz"
+
+#####################################################################
+#		TIMING RUNTIME PARAMETERS			    #
+#####################################################################
+tstep_change_factor             = 1.10
+cfl                             = 0.1
+dt_diff_factor                  = 0.1
+rt_dtFactor                     = 1.0e+100
+hx_dtFactor                     = 1.0e+100
+tmax                            = 100.0e-09	# 100ns
+dtmin                           = 1.0e-16
+dtinit                          = 1.0e-15
+dtmax                           = 3.0e-09
+nend                            = 100000000
+smallt                          = 1.0
+smallx                          = 1.0e-99
+
+#####################################################################
+#		INIT COND, EOS & REFINEMENT RUNTIME PARAMETERS	    #
+#####################################################################
+geometry                        = "cylindrical"
+xmin                            = 0.0
+xmax                            = 1.0	# Accounting for a 1:4 initial block
+ymin                            = -0.5	# ratio in x&y
+ymax                            = 3.5	# The distance away to measure (3-5cm away)
+xl_boundary_type                = "axisymmetric"
+xr_boundary_type                = "outflow"
+yl_boundary_type                = "outflow"
+yr_boundary_type                = "outflow"
+zl_boundary_type                = "reflect"
+zr_boundary_type                = "reflect"
+
+nblockx                         = 2
+nblocky                         = 8
+lrefine_max                     = 4
+lrefine_min                     = 1
+refine_var_1                    = "dens"
+refine_var_2			= "magx"
+refine_var_3			= "magy"
+refine_var_4			= "magz"
+
+sim_initGeom			= "slab"
+sim_targetRadius                = 0.5
+sim_targetHeight                = -0.5
+sim_vacuumHeight                = 3.5
+sim_rhoTarg                     = 2.7
+sim_teleTarg                    = 290.11375	# Room Temperature initial conditions
+sim_tionTarg                    = 290.11375
+sim_tradTarg                    = 290.11375
+ms_targA                        = 26.9815386
+ms_targZ                        = 13.0
+ms_targZMin                     = 0.02
+eos_targEosType                 = "eos_tab"
+eos_targSubType                 = "ionmix4"
+eos_targTableFile               = "al-imx-003.cn4"
+sim_rhoCham                     = 1.0E-06
+sim_teleCham                    = 290.11375
+sim_tionCham                    = 290.11375
+sim_tradCham                    = 290.11375
+ms_chamA                        = 4.002602
+ms_chamZ                        = 2.0
+eos_chamEosType                 = "eos_tab"
+eos_chamSubType                 = "ionmix4"
+eos_chamTableFile               = "he-imx-005.cn4"
+eosModeInit                     = "dens_temp_gather"
+eos_useLogTables                = .FALSE.
+
+#####################################################################
+#		ENERGY DEPOSITION RUNTIME PARAMETERS		    #
+#####################################################################
+useEnergyDeposition 		= .TRUE.
+ed_maxRayCount      		= 10000
+ed_gradOrder        		= 2
+ed_laser3Din2D           	= .TRUE.
+ed_laser3Din2DwedgeAngle 	= 0.1
+ed_useLaserIO                  	= .TRUE.
+ed_laserIOMaxNumberOfPositions 	= 10000
+ed_laserIOMaxNumberOfRays      	= 128
+
+# ~~~~~~~~~~~~~~~ PYTHON-GENERATED LASERS SECTION ~~~~~~~~~~~~~
+# ~~~~ Automatically-generated by parLaser.py version 0.0.1 ~~~
+# ~~ Note: Make sure to use FLASH setup flags to increase beam and pulse count as needed.
+# ~~ E.g.:
+#    ./setup LaserSlab -auto ed_maxPulses=1 ed_maxBeams=1 ed_maxPulseSections=4
+
+ed_numberOfPulses = 1
+ed_numberOfBeams = 1
+
+###### BEAM/PULSE COMBO #1
+#### Automatically-generated by parLaser.py version 0.0.1
+## Begin pulse 1:
+ed_numberOfSections_1 = 4
+ed_power_1_1 = 0.0
+ed_power_1_2 = 1071428571.4285713
+ed_power_1_3 = 1071428571.4285713
+ed_power_1_4 = 0.0
+ed_time_1_1 = 0.0
+ed_time_1_2 = 1.0E-10
+ed_time_1_3 = 1.4E-8
+ed_time_1_4 = 1.41e-8
+
+## Begin beam 1:
+ed_pulseNumber_1 = 1
+ed_lensX_1 = 0
+ed_lensY_1 = 0
+ed_lensZ_1 = 1000
+ed_targetX_1 = 0
+ed_targetY_1 = 0
+ed_targetZ_1 = 0
+ed_gaussianRadiusMinor_1 = 0.0021231422505307855
+ed_gridType_1 = "radial2D"
+ed_lensSemiAxisMinor_1 = 0.005095541401273885
+ed_semiAxisMajorTorsionAngle_1 = 0.0
+ed_gaussianExponent_1 = 1.0
+ed_lensSemiAxisMajor_1 = 0.005095541401273885
+ed_crossSectionFunctionType_1 = "gaussian2D"
+ed_gaussianRadiusMajor_1 = 0.0021231422505307855
+ed_wavelength_1 = 1.053
+ed_numberOfRays_1 = 4096
+ed_targetSemiAxisMinor_1 = 0.005095541401273885
+ed_semiAxisMajorTorsionAxis_1 = "x"
+ed_targetSemiAxisMajor_1 = 0.005095541401273885
+# ~~~~~~~~~~~ END OF PYTHON-GENERATED LASERS SECTION ~~~~~~~~~~~~~
+
+#####################################################################
+#		HEAT EXCHANGE RUNTIME PARAMETER			    #
+#####################################################################
+useHeatexchange                 = .TRUE.
+
+#####################################################################
+#		RADIATION AND OPACITY RUNTIME PARAMETERS	    #
+#####################################################################
+rt_useMGD       		= .TRUE.
+useRadTrans			= .TRUE.
+useCool				= .FALSE.
+rt_mgdNumGroups 		= 6
+rt_mgdBounds_1  		= 1.0e-01
+rt_mgdBounds_2  		= 1.0e+00
+rt_mgdBounds_3  		= 1.0e+01
+rt_mgdBounds_4  		= 1.0e+02
+rt_mgdBounds_5  		= 1.0e+03
+rt_mgdBounds_6  		= 1.0e+04
+rt_mgdBounds_7  		= 1.0e+05
+rt_mgdFlMode    		= "fl_harmonic"
+rt_mgdFlCoef    		= 1.0
+rt_mgdXlBoundaryType 		= "reflecting"
+rt_mgdXrBoundaryType 		= "vacuum"
+rt_mgdYlBoundaryType 		= "vacuum"
+rt_mgdYrBoundaryType 		= "reflecting"
+rt_mgdZlBoundaryType 		= "reflecting"
+rt_mgdZrBoundaryType 		= "reflecting"
+
+useOpacity     			= .TRUE.
+op_chamAbsorb   		= "op_tabpa"
+op_chamEmiss    		= "op_tabpe"
+op_chamTrans    		= "op_tabro"
+op_chamFileType 		= "ionmix4"
+op_chamFileName 		= "he-imx-005.cn4"
+op_targAbsorb   		= "op_tabpa"
+op_targEmiss    		= "op_tabpe"
+op_targTrans    		= "op_tabro"
+op_targFileType 		= "ionmix4"
+op_targFileName 		= "al-imx-003.cn4"
+
+#####################################################################
+#		DIFFUSION RUNTIME PARAMETERS			    #
+#####################################################################
+useDiffuse      		= .TRUE.
+useConductivity 		= .TRUE.
+diff_useEleCond 		= .TRUE.
+diff_eleFlMode  		= "fl_larsen"
+diff_eleFlCoef  		= 0.06
+diff_thetaImplct 		= 1.0
+
+diff_eleXlBoundaryType 		= "neumann"
+diff_eleXrBoundaryType 		= "neumann"
+diff_eleYlBoundaryType 		= "neumann"
+diff_eleYrBoundaryType 		= "neumann"
+diff_eleZlBoundaryType 		= "neumann"
+diff_eleZrBoundaryType 		= "neumann"
+
+useMagneticResistivity		= .FALSE.
+
+#####################################################################
+#		MAGNETO-HYDRODYNAMIC RUNTIME PARAMETERS		    #
+#####################################################################
+use_Biermann			= .TRUE.
+use_Biermann3T 			= .TRUE.
+hy_biermannSource 		= .FALSE.
+conserveAngField		= .TRUE.
+killdivb        		= .TRUE.
+
+#####################################################################
+#		HYDRODYNAMIC RUNTIME PARAMETERS			    #
+#####################################################################
+useHydro 			= .TRUE. 
+order            		= 2
+slopeLimiter     		= "hybrid"
+LimitedSlopeBeta 		= 1.
+charLimiting     		= .TRUE.
+use_avisc        		= .TRUE.
+cvisc            		= 0.1
+use_flattening   		= .FALSE.
+use_steepening   		= .FALSE.
+use_upwindTVD    		= .FALSE.
+RiemannSolver    		= "hllc"
+entropy          		= .FALSE.
+shockDetect      		= .FALSE.
+use_hybridOrder  		= .TRUE.
